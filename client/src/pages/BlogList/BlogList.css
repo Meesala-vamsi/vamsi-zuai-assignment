@@ -1,0 +1,123 @@
+.blog-list-container{
+  list-style: none;
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+ .blog-list-items{
+  padding: 9px 7px;
+  border-radius: 27px;
+  display: flex;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+ .blog-sub-list{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 28px;
+}
+
+.nav-link{
+  color: inherit;
+  text-decoration: none;
+}
+
+ .blog-sub-list:hover{
+  background-color: rgba(128, 128, 128, 0.292);
+  transition-duration: 0.5s;
+}
+
+ .blog-image-container{
+  display: flex;
+  justify-content: center;
+}
+ .blog-content-container{
+  padding: 6px 7px;
+}
+
+ .blog-image{
+  width: 150px;
+  height:250px;
+  border-radius: 27px;
+}
+
+ .tags-container{
+  display: flex;
+  list-style: none;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0px;
+}
+ .tags-list-items{
+  border: 1px solid #1b6f7a;
+  padding: 3px 7px;
+  border-radius: 10px;
+  background-color: #EBF9FC;
+  font-size: 10px;
+}
+
+.blog-title {
+  max-width: 150px;        
+  white-space: nowrap;    
+  overflow: hidden;        
+  text-overflow: ellipsis;
+}
+.nav-link{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+@media screen and (max-width:768px){
+ .blog-list-items{
+    width: 100%;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    margin-right: 0px;
+  }
+
+  .blog-title {
+    max-width: 250px;        
+    white-space: nowrap;    
+    overflow: hidden;        
+    text-overflow: ellipsis;
+    margin-bottom: 0px;
+  }
+
+ .blog-sub-list{
+    width: 90%;
+  }
+
+ .blog-image{
+    width: 100%;
+  }
+  .blog-list-container{
+    padding: 20px;
+  }
+}
+
+@media screen and (min-width:900px){
+ .blog-list-items{
+    width: 350px;
+  }
+ .blog-sub-list{
+    width: 95%;
+  }
+  .blog-image{
+    width: 100%;
+  }
+  .blog-title{
+    margin-bottom: 0px;
+  }
+}
