@@ -1,22 +1,22 @@
-import cookies from "js-cookie"
-import {toast} from "react-toastify"
-import { useNavigate } from 'react-router-dom';
+import cookies from "js-cookie";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { useContext, useState } from "react";
-import axios from "axios"
-import {ReactContext} from "../../ReactContext/Context"
+import axios from "axios";
+import { ReactContext } from "../../ReactContext/Context";
 
 const Header = () => {
-  const navigate= useNavigate()
-  const {url,fetchBlogs} = useContext(ReactContext)
+  const navigate = useNavigate();
+  const { url, fetchBlogs } = useContext(ReactContext);
 
   const [showPopup, setShowPopup] = useState(false);
   const [blogData, setBlogData] = useState({
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     image: null,
     tags: [],
-    timeTakeToRead: ''
+    timeTakeToRead: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,50 +29,54 @@ const Header = () => {
   const handleTagsChange = (e) => {
     setBlogData({
       ...blogData,
-      tags: e.target.value.split(',').map(tag => tag.trim()),
+      tags: e.target.value.split(",").map((tag) => tag.trim()),
     });
   };
-  const onClickLogout = ()=>{
-    cookies.remove("authToken")
-      toast.success("Logout successfully..")
-      localStorage.removeItem("userData")
-      navigate("/login")
-  }
+  const onClickLogout = () => {
+    cookies.remove("authToken");
+    toast.success("Logout successfully..");
+    localStorage.removeItem("userData");
+    navigate("/login");
+  };
 
   const handleImageChange = (e) => {
     setBlogData({
       ...blogData,
-      image: e.target.files[0], 
+      image: e.target.files[0],
     });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-  formData.append('title', blogData.title);
-  formData.append('description', blogData.description);
-  formData.append('image', blogData.image); 
-  formData.append('tags', blogData.tags);
-  formData.append('timeTakeToRead', blogData.timeTakeToRead);
+    formData.append("title", blogData.title);
+    formData.append("description", blogData.description);
+    formData.append("image", blogData.image);
+    formData.append("tags", blogData.tags);
+    formData.append("timeTakeToRead", blogData.timeTakeToRead);
     try {
       const response = await axios.post(`${url}/posts`, formData, {
         headers: {
-          'Authorization': `Bearer ${cookies.get("authToken")}`,
-          'Content-Type': 'multipart/form-data', 
+          Authorization: `Bearer ${cookies.get("authToken")}`,
+          "Content-Type": "multipart/form-data",
         },
+      });
+      if (response.status === 201) {
+        fetchBlogs();
+        setBlogData({
+          title: "",
+          description: "",
+          image: null,
+          tags: [],
+          timeTakeToRead: "",
+        });
       }
-      
-    )
-    if(response.status===201){
-      fetchBlogs()
-    }
-      
+
       setShowPopup(false);
-      toast.success('Blog created successfully!');
-    }catch (error) {
-      console.error('Error creating blog:', error);
-      alert('Failed to create blog.');
+      toast.success("Blog created successfully!");
+    } catch (error) {
+      console.error("Error creating blog:", error);
+      alert("Failed to create blog.");
     }
   };
 
@@ -82,9 +86,16 @@ const Header = () => {
         <h4>ZuAi</h4>
       </div>
       <div className="btn-container">
-      
-      <button className="create-blog" style={{marginRight:"20px"}} onClick={() => setShowPopup(true)}>Create blog +</button>
-      <button className="create-blog" onClick={onClickLogout}>Logout</button>
+        <button
+          className="create-blog"
+          style={{ marginRight: "20px" }}
+          onClick={() => setShowPopup(true)}
+        >
+          Create blog +
+        </button>
+        <button className="create-blog" onClick={onClickLogout}>
+          Logout
+        </button>
       </div>
       {showPopup && (
         <div className="popup-overlay">
@@ -127,7 +138,7 @@ const Header = () => {
                 Tags (comma-separated):
                 <input
                   type="text"
-                  value={blogData.tags.join(', ')}
+                  value={blogData.tags.join(", ")}
                   onChange={handleTagsChange}
                   required
                 />
@@ -148,7 +159,11 @@ const Header = () => {
                 <button type="submit" className="submit-btn">
                   Submit
                 </button>
-                <button type="button" onClick={() => setShowPopup(false)} className="cancel-btn">
+                <button
+                  type="button"
+                  onClick={() => setShowPopup(false)}
+                  className="cancel-btn"
+                >
                   Cancel
                 </button>
               </div>
